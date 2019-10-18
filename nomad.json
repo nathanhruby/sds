@@ -1,0 +1,34 @@
+{
+    "bind_addr": "{{ GetInterfaceIP \"enp0s8\" }}",
+    "client": {
+        "enabled": true,
+        "network_interface": "enp0s8",
+        "options": {
+            "docker.privileged.enabled": true
+        }
+    },
+    "data_dir": "/var/lib/nomad",
+    "datacenter": "sds",
+    "plugin": {
+        "raw_exec": {
+            "config": {
+                "enabled": true
+            }
+        }
+    },
+    "region": "local",
+    "server": {
+        "enabled": true,
+        "bootstrap_expect": 3,
+        "server_join": {
+            "retry_join": [ "box-1.sds.example.com", "box-2.sds.example.com", "box-3.sds.example.com" ]
+        }
+    },
+    "telemetry":{
+        "collection_interval": "1s",
+        "disable_hostname": true,
+        "prometheus_metrics": true,
+        "publish_allocation_metrics": true,
+        "publish_node_metrics": true
+    }
+}
