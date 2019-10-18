@@ -125,7 +125,7 @@ EOH
             {
                 type = "volume"
                 target = "/prometheus"
-                source =  "name=mysql,size=5G,repl=3"
+                source =  "name=prometheus,size=5G,repl=3"
                 volume_options {
                     driver_config {
                         name = "pxd"
