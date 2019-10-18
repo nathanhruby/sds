@@ -1,6 +1,6 @@
 job "px-node-wiper" {
   type        = "batch"
-  datacenters = ["sds"]
+  datacenters = ["__nope__"]
 
   group "px-node-wiper" {
     count = 3
