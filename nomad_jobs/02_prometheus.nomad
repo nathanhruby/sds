@@ -4,14 +4,12 @@ job "prometheus" {
 
   group "monitoring" {
     count = 1
+
     restart {
       attempts = 2
       interval = "30m"
       delay = "15s"
       mode = "fail"
-    }
-    ephemeral_disk {
-      size = 300
     }
 
     task "prometheus" {
@@ -128,7 +126,7 @@ EOH
                 type = "volume"
                 target = "/prometheus"
                 source =  "name=mysql,size=5G,repl=3"
-                volume_options = {
+                volume_options {
                     driver_config {
                         name = "pxd"
                     }
