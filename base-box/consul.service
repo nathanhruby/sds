@@ -1,7 +1,7 @@
 [Unit]
 Description=consul agent
-Requires=network-online.target
-After=network-online.target
+Requires=vagrant.mount
+After=vagrant.mount
 
 [Service]
 Restart=on-failure

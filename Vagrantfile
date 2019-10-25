@@ -7,7 +7,10 @@ Vagrant.configure("2") do |config|
   config.hostmanager.manage_guest = true
   config.hostmanager.include_offline = true
 
-  config.vm.box = "ubuntu/bionic64"
+  # Create / Upgrade this box with 'cd base-box && ./build.sh'
+  # It is a repackaged Vagrant machine, add any global host changes
+  # to the Vagrantfile there
+  config.vm.box = "sds-base"
 
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = 2
@@ -28,37 +31,5 @@ Vagrant.configure("2") do |config|
       end
     end
   end
-
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get -y update
-    # sudo apt-get -y upgrade
-    sudo apt-get -y install unzip golang-cfssl
-  SHELL
-
-  config.vm.provision "docker"
-
-  config.vm.provision "file", source: "consul.service", destination: "/tmp/consul.service"
-  config.vm.provision "file", source: "nomad.service", destination: "/tmp/nomad.service"
-  config.vm.provision "file", source: "consul.json", destination: "/tmp/consul.json"
-  config.vm.provision "file", source: "nomad.json", destination: "/tmp/nomad.json"
-  config.vm.provision "shell", inline: <<-SHELL
-    declare -A versions
-    versions[consul]="1.6.1"
-    versions[nomad]="0.10.0-beta1"
-    for service in "${!versions[@]}" ; do 
-      echo "Installing ${service^}..."
-      mkdir /var/lib/${service}
-      cd /tmp
-      curl -sSL https://releases.hashicorp.com/${service}/${versions[$service]}/${service}_${versions[$service]}_linux_amd64.zip > ${service}.zip
-      unzip /tmp/${service}.zip
-      sudo install ${service} /usr/bin/${service}
-      sudo mkdir -p /etc/${service}.d
-      sudo chmod a+w /etc/${service}.d
-      sudo mv ${service}.json /etc/${service}.d
-      sudo mv ${service}.service /etc/systemd/system/${service}.service
-      sudo systemctl enable ${service}.service
-      sudo systemctl start ${service}
-    done
-  SHELL
 
 end
