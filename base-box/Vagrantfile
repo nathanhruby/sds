@@ -32,7 +32,8 @@ Vagrant.configure("2") do |config|
       sudo chmod a+w /etc/${service}.d
       sudo mv ${service}.json /etc/${service}.d
       sudo mv ${service}.service /etc/systemd/system/${service}.service
-      sudo systemctl enable ${service}.service
+      # don't enable the service, we'll do that after boot when our interfaces are there
+      #sudo systemctl enable ${service}.service
     done
   SHELL
 

@@ -1,3 +1,4 @@
 .vagrant
 *console.log
 *.box
+*.tar.gz
