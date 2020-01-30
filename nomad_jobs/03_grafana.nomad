@@ -20,7 +20,7 @@ job "grafana" {
           {
             type = "volume"
             target = "/var/lib/grafana"
-            source = "name=grafana,size=5G,repl=3"
+            source = "name=grafana,size=5G,repl=1"
             volume_options {
               driver_config {
                 name = "pxd"

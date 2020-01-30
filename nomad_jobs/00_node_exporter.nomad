@@ -25,6 +25,7 @@ job "node-exporter" {
 
       service {
         name = "node-exporter"
+        tags = ["metrics"]
         check {
             port = "node_exporter"
             type = "http"
@@ -32,19 +33,17 @@ job "node-exporter" {
             interval = "10s"
             timeout = "2s"
         }
-        tags = ["metrics"]
       }
 
       resources {
-          cpu    = 50
-          memory = 100
-          network {
-            port "node_exporter" {
-              static = "9100" 
-            }
+        cpu    = 50
+        memory = 100
+        network {
+          port "node_exporter" {
+            static = "9100" 
           }
         }
-    
+      }    
     }
   }
 }

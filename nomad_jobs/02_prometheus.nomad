@@ -50,6 +50,11 @@ rule_files:
   - "alerts.yml"
 
 scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+      # - targets: ['{{ env "NOMAD_IP_prometheus_ui" }}:{{ env "NOMAD_HOST_PORT_prometheus_ui" }}']
 
   - job_name: 'consul_metrics'
     consul_sd_configs:
@@ -125,7 +130,7 @@ EOH
             {
                 type = "volume"
                 target = "/prometheus"
-                source =  "name=prometheus,size=5G,repl=3"
+                source =  "name=prometheus,size=5G,repl=1"
                 volume_options {
                     driver_config {
                         name = "pxd"

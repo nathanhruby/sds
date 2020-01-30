@@ -19,8 +19,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "nomad.json", destination: "/tmp/nomad.json"
   config.vm.provision "shell", inline: <<-SHELL
     declare -A versions
-    versions[consul]="1.6.1"
-    versions[nomad]="0.10.0"
+    versions[consul]="1.6.2"
+    versions[nomad]="0.10.2"
     for service in "${!versions[@]}" ; do 
       echo "Installing ${service^}..."
       mkdir /var/lib/${service}
